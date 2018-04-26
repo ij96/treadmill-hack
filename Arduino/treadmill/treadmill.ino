@@ -26,43 +26,19 @@ void analogWrite16(uint8_t pin, uint16_t val) {
   }
 }
 
-void setup() {
-  Serial.begin(9600);
-  Serial.println("### Treadmill Hack ###");
-  pinMode(RPM_PIN, INPUT);
-  pinMode(PWM_PIN, OUTPUT);
-  pinMode(REL_PIN, OUTPUT);
-  digitalWrite(REL_PIN, LOW);
-  attachInterrupt(digitalPinToInterrupt(RPM_PIN), ISR_RPM_count, RISING);
-  setupPWM16();
-}
-
-int time_start = millis();
-int time_elapsed = 0;
-
-void loop() {
-  if (Serial.available() > 0) {
-    parse_command(Serial.readString());
-  }
-  time_elapsed = millis() - time_start;
-  if (time_elapsed >= 1000) {
-    report();
-  }
-}
-
-void ISR_RPM_count() {
-  rpm_edge_count += 1;
-}
+//void ISR_RPM_count() {
+//  rpm_edge_count += 1;
+//}
 
 void report() {
-  rpm = rpm_edge_count * 250 / time_elapsed * 0.0003663 * 3600; // calculate RPM
+  //rpm = rpm_edge_count * 250 / time_elapsed * 0.0003663 * 3600; // calculate RPM
   Serial.print("Motor is: "); Serial.print(system_on?"ON":"OFF");
-  Serial.print("\tRPM edge: "); Serial.print(rpm_edge_count);
-  Serial.print("\tspeed: "); Serial.print(rpm); Serial.print(" km/h");
+  //Serial.print("\tRPM edge: "); Serial.print(rpm_edge_count);
+  //Serial.print("\tspeed: "); Serial.print(rpm); Serial.print(" km/h");
   Serial.print("\tPWM: "); Serial.println(pwm);
-  rpm_edge_count = 0;                           // clear edge count
-  time_start = millis();                        // reset timer
-  time_elapsed = 0;
+  //rpm_edge_count = 0;                           // clear edge count
+  //time_start = millis();                        // reset timer
+  //time_elapsed = 0;
 }
 
 void parse_command(String command) {
@@ -70,9 +46,9 @@ void parse_command(String command) {
     command.remove(0, 1);
     pwm = command.toInt();
     analogWrite16(PWM_PIN, pwm);
-    Serial.print("PWM: "); Serial.println(pwm);
+    Serial.print("New PWM: "); Serial.println(pwm);
   } else if ((command == "on") || (command == "ON")) {
-    Serial.println("Motor will be ON in 3 seconds...");
+    Serial.print("Motor will be ON in 3 seconds...");
     Serial.print("3..."); delay(1000);
     Serial.print("2..."); delay(1000);
     Serial.print("1..."); delay(1000);
@@ -84,5 +60,42 @@ void parse_command(String command) {
     Serial.println("Motor OFF");
     system_on = false;
   }
+  report();
 }
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("#############################################################################");
+  Serial.println("#                                                                           #");
+  Serial.println("#                              Treadmill Hack                               #");
+  Serial.println("# Serial command:                                                           #");
+  Serial.println("#   to turn on or off the motor:                                            #");
+  Serial.println("#     send \"on\" or \"off\"                                                    #");
+- Serial.println("#   to set new PWM value:                                                   #");
+- Serial.println("#     send \"p<pwm>\", where \"<pwm>\" is an integer in the range of 0 to 65535 #");
+  Serial.println("#                                                                           #");
+  Serial.println("#############################################################################");
+  pinMode(RPM_PIN, INPUT);
+  pinMode(PWM_PIN, OUTPUT);
+  pinMode(REL_PIN, OUTPUT);
+  digitalWrite(REL_PIN, LOW);
+  //attachInterrupt(digitalPinToInterrupt(RPM_PIN), ISR_RPM_count, RISING);
+  setupPWM16();
+  report();
+}
+
+//int time_start = millis();
+//int time_elapsed = 0;
+
+void loop() {
+  if (Serial.available() > 0) {
+    parse_command(Serial.readString());
+  }
+  //time_elapsed = millis() - time_start;
+  //if (time_elapsed >= 2000) {
+  //  report();
+  //}
+}
+
+
 
