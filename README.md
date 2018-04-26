@@ -1,31 +1,17 @@
 # Treadmill speed controller
 
-Treadmill hack - controlling treadmill speed directly using ESP8266 and MicroPython
+Treadmill hack - controlling treadmill speed directly using Arduino UNO
 
 ## To-do
 
-- [x] PWM control
-
-- [x] RPM & speed calculation
+- [] RPM & speed calculation
 
 ## Usage
 
-- connect ESP8266 to PC via USB
+- upload code to Arduino UNO
 
-- upload `main.py` to ESP8266
+- open Serial Monitor
 
-  ```
-  sudo ampy --port /dev/ttyS* put main.py
-  ```
+- to turn on or off the motor: send `on` or `off` via Serial
 
-- open serial port to communicate with the ESP8266
-
-  ```
-  sudo microcom -p /dev/ttyS* -s 115200
-  ```
-
-- change raw PWM to x (x is an integer in between and including 0 and 1023)
-
-  ```
-  pwm.duty(x)
-  ```
+- to set new PWM value: send `p<pwm>` via Serial, where `<pwm>` is an integer in the range of 0 to 65535 (default PWM on start-up is 0)
