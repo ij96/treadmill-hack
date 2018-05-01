@@ -6,6 +6,8 @@ Treadmill hack - controlling treadmill speed directly using Arduino UNO
 
 - [] RPM & speed calculation
 
+- [] inclination control (up and down buttons for manual control)
+
 ## Usage
 
 - upload code to Arduino UNO
