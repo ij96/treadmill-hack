@@ -1,8 +1,22 @@
-// treadmill hack
+/* Treadmill hack
+  Model: Dream Treadmill D1000
+  Signal wires:
+    Name  | Colour  | Description
+    Vref    black     5V
+    VR      white     ~4.73V
+    GND     grey      0V (ground)
+    RPM     purple    RPM signal (active low, 2 peaks per rotation)
+    VDD     blue      ~15V
+    PWM     green     PWM signal (native controller use 400Hz)
+    DN      yellow    inclination up (active high)
+    UP      orange    inclination down (active high)
+    S/W     red       ~15V
+    relay   brown     relay signal (active high)
+*/
 
-#define RPM_PIN 2  // RPM signal (active low) must be an interrupt pin - 2 or 3 for Uno
+#define RPM_PIN 2  // RPM signal - must be an interrupt pin, which is 2 or 3 on Uno
 #define PWM_PIN 9  // PWM signal - use pin 9 or 10, for 16-bit resolution
-#define REL_PIN 5  // relay signal (active high) - 0V for motor off, 5V for motor on
+#define REL_PIN 5  // relay signal - 0V for motor off, 5V for motor on
 
 int rpm_edge_count = 0;
 float rpm = 0;
@@ -68,6 +82,7 @@ void setup() {
   Serial.println("#############################################################################");
   Serial.println("#                                                                           #");
   Serial.println("#                              Treadmill Hack                               #");
+  Serial.println("#                       Model: Dream Treadmill D1000                        #");
   Serial.println("# Serial command:                                                           #");
   Serial.println("#   to turn on or off the motor:                                            #");
   Serial.println("#     send \"on\" or \"off\"                                                    #");
