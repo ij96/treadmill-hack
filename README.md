@@ -1,6 +1,6 @@
-# Treadmill speed controller
+# Treadmill Hack
 
-Treadmill hack - controlling treadmill speed directly using Arduino UNO
+Controlling treadmill speed directly using Arduino UNO
 
 ## Usage
 
