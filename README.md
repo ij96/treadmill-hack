@@ -12,14 +12,6 @@ Controlling treadmill speed directly using Arduino UNO
 
 - to set new PWM value: send `p<pwm>` via Serial, where `<pwm>` is an integer in the range of 0 to 65535 (default PWM on start-up is 0)
 
-## Models
-
-Models of treadmill:
-
-- Dream Treadmill D1000 (in progress)
-
-- Proform 450 CX
-
 ## To-do
 
 - [] RPM & speed calculation

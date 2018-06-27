@@ -1,5 +1,4 @@
 /* Treadmill hack
-  Model: Dream Treadmill D1000
   Signal wires:
     Name  | Colour  | Description
     Vref    black     5V
